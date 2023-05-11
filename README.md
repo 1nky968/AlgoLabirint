@@ -1,0 +1,2 @@
+# AlgoLabirint
+лабиринт
