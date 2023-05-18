@@ -46,11 +46,21 @@ class Player(GameSprite):
            for p in platforms_touched:
                self.y_speed = 0
                self.rect.top = max(self.rect.top, p.rect.bottom)
+
+class Bullet(GameSprite):
+    def __init__(self, player_image, player_x, player_y, size_x, size_y):
+        GameSprite.__init__(self, player_image, player_x, player_y, size_x, size_y)
+        self.speed = player_speed
+    def update(self):
+        self.rect.x += self.speed
+        if self.rect.x > win_width+10:
+            self.kill()
+
 win_width = 700
 win_height = 500
 display.set_caption('Лабиринт')
 window = display.set_mode((win_width, win_height))
-back = (119, 210, 223)
+back = (146, 161, 145)
 
 barriers = sprite.Group()
 
@@ -89,23 +99,23 @@ while run:
         if e.type == QUIT:
             run = False
         elif e.type == KEYDOWN:
-            if e.key == K_LEFT:
-                packman.x_speed = -5
-            elif e.key == K_RIGHT:
-                packman.x_speed = 5
-            elif e.key == K_UP :
-                packman.y_speed = -5
-            elif e.key == K_DOWN :
-                packman.y_speed = 5
+            if e.key == K_a:
+                packman.x_speed = -4
+            elif e.key == K_d:
+                packman.x_speed = 4
+            elif e.key == K_w:
+                packman.y_speed = -4
+            elif e.key == K_s :
+                packman.y_speed = 4
  
         elif e.type == KEYUP:
-            if e.key == K_LEFT :
+            if e.key == K_a:
                 packman.x_speed = 0
-            elif e.key == K_RIGHT:
+            elif e.key == K_d:
                 packman.x_speed = 0 
-            elif e.key == K_UP:
+            elif e.key == K_w:
                 packman.y_speed = 0
-            elif e.key == K_DOWN:
+            elif e.key == K_s:
                 packman.y_speed = 0
     if not finish:
         window.fill(back)
